@@ -52,7 +52,6 @@ def searchFor(df, userAnswer): # Search # UserAnswer 1 = Metro Manila, 2 = Provi
         make_line()
         
    
-   
 make_line()
 print(f'''Choose Type:
         (1) Metro Manila
@@ -63,6 +62,11 @@ if userAnswer == '1':
     file_name = 'zips/MetroManilaZipCodes.xlsx'
     df = pd.read_excel(io=file_name, sheet_name='MM',) # Currently only reads the sheet 'MM' - Metro Manila
     df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
+    # Remove blank rows
+    df['ZIP Code'].replace('', np.nan, inplace=True)
+    df['City'].replace('', np.nan, inplace=True)
+    df['Barangay'].replace('', np.nan, inplace=True)
+    df.dropna(inplace=True)
 else:
     file_name = 'zips/provinceZip.xlsx'
     df = pd.read_excel(io=file_name) # Currently only reads the sheet 'MM' - Metro Manila    
@@ -70,10 +74,8 @@ else:
     df['ZIP Code'].replace('', np.nan, inplace=True)
     df['Province'].replace('', np.nan, inplace=True)
     df['Barangay'].replace('', np.nan, inplace=True)
-    
     df.dropna(inplace=True)
-    print(df)
-    # df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
+    df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
 
 showUserMenu()
 searchFor(df, userAnswer)
