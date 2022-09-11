@@ -1,4 +1,6 @@
+from operator import truediv
 import pandas as pd
+import numpy as np
 
 print('''
 _____  _    _ ___________ _____  
@@ -24,11 +26,15 @@ def showUserMenu(): # Shows selection of city or barangay
     make_line()
 
 
-def searchFor(df): # Search
+def searchFor(df, userAnswer): # Search # UserAnswer 1 = Metro Manila, 2 = Province
     userMenu = input('Select: ')
+    if userAnswer == '1':
+        col1Name = 'City'
+    else:
+        col1Name = 'Province'
     if userMenu == '1': # Search for City list zip codes
         cityPick = input('Input City: ')
-        df = df[df['City'].str.contains(cityPick, na=False, case=False)] # na=False removes blank passages in the file if any
+        df = df[df[col1Name].str.contains(cityPick, na=False, case=False)] # na=False removes blank passages in the file if any
         make_line()
         print(df)
         make_line()
@@ -39,11 +45,29 @@ def searchFor(df): # Search
         print(df)
         make_line()
         
-        
-file_name = 'zips/MetroManilaZipCodes.xlsx'
-df = pd.read_excel(io=file_name, sheet_name='MM',) # Currently only reads the sheet 'MM' - Metro Manila
-df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
+   
+   
+make_line()
+print(f'''Choose Type:
+        (1) Metro Manila
+        (2) Regional
+        ''')
+userAnswer = input('Answer: ')
+if userAnswer == '1':
+    file_name = 'zips/MetroManilaZipCodes.xlsx'
+    df = pd.read_excel(io=file_name, sheet_name='MM',) # Currently only reads the sheet 'MM' - Metro Manila
+    df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
+else:
+    file_name = 'zips/provinceZip.xlsx'
+    df = pd.read_excel(io=file_name) # Currently only reads the sheet 'MM' - Metro Manila    
+    # Remove blank rows
+    df['ZIP Code'].replace('', np.nan, inplace=True)
+    df['Province'].replace('', np.nan, inplace=True)
+    df['Barangay'].replace('', np.nan, inplace=True)
+    
+    df.dropna(inplace=True)
+    print(df)
+    # df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
 
-        
 showUserMenu()
-searchFor(df)
+searchFor(df, userAnswer)
