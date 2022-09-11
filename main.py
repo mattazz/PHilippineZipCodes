@@ -36,13 +36,19 @@ def searchFor(df, userAnswer): # Search # UserAnswer 1 = Metro Manila, 2 = Provi
         cityPick = input('Input City: ')
         df = df[df[col1Name].str.contains(cityPick, na=False, case=False)] # na=False removes blank passages in the file if any
         make_line()
-        print(df)
+        if df.empty:
+            print("No results to show based on your search.")
+        else: 
+            print(df)
         make_line()
     elif userMenu == '2': # Search for Barangay / District direct zip codes
         brgyPick = input('Input Barangay: ')
         df = df[df['Barangay'].str.contains(brgyPick, na=False, case=False)] # na=False removes blank passages in the file if any
         make_line()
-        print(df)
+        if df.empty:
+            print("No results to show based on your search.")
+        else: 
+            print(df)
         make_line()
         
    
