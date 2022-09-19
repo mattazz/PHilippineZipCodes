@@ -1,6 +1,7 @@
 from operator import truediv
 import pandas as pd
 import numpy as np
+import sys
 
 print('''
 _____  _    _ ___________ _____  
@@ -51,31 +52,35 @@ def searchFor(df, userAnswer): # Search # UserAnswer 1 = Metro Manila, 2 = Provi
             print(df)
         make_line()
         
-   
-make_line()
-print(f'''Choose Type:
-        (1) Metro Manila
-        (2) Regional
-        ''')
-userAnswer = input('Answer: ')
-if userAnswer == '1':
-    file_name = 'zips/MetroManilaZipCodes.xlsx'
-    df = pd.read_excel(io=file_name, sheet_name='MM',) # Currently only reads the sheet 'MM' - Metro Manila
-    df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
-    # Remove blank rows
-    df['ZIP Code'].replace('', np.nan, inplace=True)
-    df['City'].replace('', np.nan, inplace=True)
-    df['Barangay'].replace('', np.nan, inplace=True)
-    df.dropna(inplace=True)
-else:
-    file_name = 'zips/provinceZip.xlsx'
-    df = pd.read_excel(io=file_name) # Currently only reads the sheet 'MM' - Metro Manila    
-    # Remove blank rows
-    df['ZIP Code'].replace('', np.nan, inplace=True)
-    df['Province'].replace('', np.nan, inplace=True)
-    df['Barangay'].replace('', np.nan, inplace=True)
-    df.dropna(inplace=True)
-    df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
+while True:
+    make_line()
+    print(f'''Choose Type:
+            (1) Metro Manila
+            (2) Regional
+            ''')
+    userAnswer = input('Answer: ')
+    if userAnswer == '1':
+        file_name = 'zips/MetroManilaZipCodes.xlsx'
+        df = pd.read_excel(io=file_name, sheet_name='MM',) # Currently only reads the sheet 'MM' - Metro Manila
+        df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
+        # Remove blank rows1
+        df['ZIP Code'].replace('', np.nan, inplace=True)
+        df['City'].replace('', np.nan, inplace=True)
+        df['Barangay'].replace('', np.nan, inplace=True)
+        df.dropna(inplace=True)
+    else:
+        file_name = 'zips/provinceZip.xlsx'
+        df = pd.read_excel(io=file_name) # Currently only reads the sheet 'MM' - Metro Manila    
+        # Remove blank rows
+        df['ZIP Code'].replace('', np.nan, inplace=True)
+        df['Province'].replace('', np.nan, inplace=True)
+        df['Barangay'].replace('', np.nan, inplace=True)
+        df.dropna(inplace=True)
+        df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
 
-showUserMenu()
-searchFor(df, userAnswer)
+    showUserMenu()
+    searchFor(df, userAnswer)
+    make_line()
+    endProgram = input("End program?(y/n) ")
+    if endProgram == 'y':
+        sys.exit()
