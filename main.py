@@ -11,8 +11,7 @@ _____  _    _ ___________ _____
 | |    | |  | |/ /__ _| |_| |     
 |_|    |_|  |_/_____|_____|_|     
 
-Search for City / Barangay Zip codes
-Note: Only Metro Manila is implemented''')
+Search for City / Barangay Zip codes''')
 
 
 def make_line(): # Makes it pretty
