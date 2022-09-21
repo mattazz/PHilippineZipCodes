@@ -10,7 +10,7 @@ _____  _    _ ___________ _____
 Database to search for Zip codes in the Philippines
 
 ### Usage
-
+Run the
 Select between zip codes found within **Metro Manila** or **Provincial Area**.
 
 ``` 
@@ -19,4 +19,16 @@ Choose Type:
             (2) Regional
             
 ```
-Select
+Select between zip codes within a **City** or a **Barangay** within the region selected
+```
+Search function: 
+        (1) City
+        (2) Barangay
+```
+
+### Requirements
+```python3 -m pip install pandas numpy sys```
+
+
+###To-do:
+- [ ] Add output to xlsx or csv function
