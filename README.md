@@ -31,4 +31,6 @@ Search function:
 
 
 ### To-do:
-- [ ] Add output to xlsx or csv function
+- [x] Add Metro Manila and Regional zip codes to database
+- [x] Add output to xlsx or csv function
+- [ ] Format zip code in excel file properly

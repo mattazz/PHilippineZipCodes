@@ -1,3 +1,4 @@
+from fileinput import filename
 from operator import truediv
 import pandas as pd
 import numpy as np
@@ -57,6 +58,7 @@ def searchFor(df, userAnswer): # Search # UserAnswer 1 = Metro Manila, 2 = Provi
             print("No results to show based on your search.")
         else: 
             print(df)
+            outputFile(df)
         make_line()
     elif userMenu == 2: # Search for Barangay / District direct zip codes
         brgyPick = input('Input Barangay: ')
@@ -66,7 +68,36 @@ def searchFor(df, userAnswer): # Search # UserAnswer 1 = Metro Manila, 2 = Provi
             print("No results to show based on your search.")
         else: 
             print(df)
+            outputFile(df)
         make_line()
+
+def outputFile(df):
+    """
+    Output file to excel funciton
+    
+    Args:
+        df (_type_): Valid Pandas dataframe
+    """
+    while True:
+        askOutput = input('Do you want to output results as .xlsx? (y/n)')
+
+        if askOutput.lower() == 'y':
+            while True:
+                fileName = input("Enter the file name: ")
+                if fileName == '':
+                    print("You have to enter something.")
+                else:
+                    break
+
+            df.to_excel(f'{fileName}.xlsx', index=False)
+            print(f"Saved as {fileName} successful")
+            
+            break
+        elif askOutput.lower() == 'n':
+            break
+        else:
+            print("Please give a valid answer.")
+
         
 while True:
     make_line()
@@ -89,7 +120,7 @@ while True:
    
     if userAnswer == 1:
         file_name = 'zips/MetroManilaZipCodes.xlsx'
-        df = pd.read_excel(io=file_name, sheet_name='MM',) # Currently only reads the sheet 'MM' - Metro Manila
+        df = pd.read_excel(io=file_name, sheet_name='MM',) 
         df['ZIP Code'] = df['ZIP Code'].astype(int) # Converts excel values to INT for the zip code column
         # Remove blank rows1
         df['ZIP Code'].replace('', np.nan, inplace=True)
@@ -98,7 +129,7 @@ while True:
         df.dropna(inplace=True)
     else:
         file_name = 'zips/provinceZip.xlsx'
-        df = pd.read_excel(io=file_name) # Currently only reads the sheet 'MM' - Metro Manila    
+        df = pd.read_excel(io=file_name)    
         # Remove blank rows
         df['ZIP Code'].replace('', np.nan, inplace=True)
         df['Province'].replace('', np.nan, inplace=True)
